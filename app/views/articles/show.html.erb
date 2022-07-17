@@ -3,7 +3,20 @@
 <p><%= @article.body %></p>
 
 
-<%# добавим ссылку на страницу редактирования внизу %>
+
+<%# добавим ссылки на страницу редактирования внизу %>
 <ul>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= link_to "Edit", edit_article_path(@article) %>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
+
+
+<%# В вышеприведенном коде мы используем опцию data для установки HTML-атрибутов
+data-turbo-method и data-turbo-confirm ссылки «Destroy». Оба этих атрибута
+подключаются к Turbo, который по умолчанию включен в новые приложения Rails.
+data-turbo-method="delete" заставит ссылку сделать запрос DELETE вместо запроса GET.
+data-turbo-confirm="Are you sure?" приведет к появлению диалогового окна подтверждения
+при нажатии на ссылку. Если пользователь отменит диалог, запрос будет прерван. %>

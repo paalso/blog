@@ -59,6 +59,24 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # Удаление ресурса это более простой процесс, чем создание или обновление.
+  # Он требует только маршрут и экшн контроллера. И наш ресурсный роутинг
+  # (resources :articles) уже предоставляет этот маршрут, связывающий запросы
+  # DELETE /articles/:id с экшном destroy в ArticlesController
+
+  # Экшн destroy извлекает статью из базы данных, и вызывает destroy на ней.
+  # Затем он перенаправляет браузер на корневой путь.
+
+  # Мы выбрали перенаправление на корневой путь, так как это наша основная точка
+  # доступа к статьям. В других обстоятельствах можно было бы выбрать
+  # перенаправление на articles_path.
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path
+  end
+
   private
 
   def article_params
