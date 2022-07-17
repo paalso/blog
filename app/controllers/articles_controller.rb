@@ -38,14 +38,33 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # извлекает статью из базы данных и сохраняет ее в @article, таким образом ее
+  # можно использовать при построении формы. По умолчанию экшн edit отрендерит
+  # app/views/articles/edit.html.erb
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  # (пере)извлекает статью из базы данных и пытается обновить ее с помощью
+  # отправленных данных формы, фильтрованных в article_params. Если ни одна
+  # валидация не упадет, и обновление будет успешным, этот экшн перенаправит браузер
+  # на страницу статьи.
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
+
   def article_params
     params.require(:article).permit(:title, :body)
   end
 end
-
-
-
 
 # Старая версия
 # def create

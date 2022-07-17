@@ -1,0 +1,36 @@
+<%# код тот же самый, что и форма в app/views/articles/new.html.erb,
+за исключением того, что все случаи @article заменены на article.
+Так как партиалы являются совместным кодом, хорошим тоном является
+не делать их зависимыми от определенных переменных экземпляра,
+установленных экшном контроллера. Вместо этого, мы передадим статью
+в партиал как локальную переменную. %>
+
+<%# form builder, для создания нашей формы. Используя построитель форм,
+можно, используя минимальное количество кода, вывести полностью настроенную
+форму, следующую соглашениям Rails. %>
+
+<%# Имя файла партиала должно начинаться на подчеркивание,
+т.е. _form.html.erb. Но при рендеринге ссылаемся на него
+без подчеркивания, т.е. render "form". %>
+
+<%= form_with model: article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %><br>
+    <% article.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
