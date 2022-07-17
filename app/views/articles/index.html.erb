@@ -1,0 +1,27 @@
+<h1>Hello, Rails!</h1>
+
+<%# К переменным экземпляра контроллера можно получить доступ из вью.
+Это означает, что мы можем ссылаться на @articles в
+app/views/articles/index.html.erb %>
+
+<h1>Articles</h1>
+
+<ul>
+  <% @articles.each do |article| %>
+    <li>
+      <%# хелпер article_path возвращает "/articles/#{article.id}" %>
+      <a href="<%= article_path(article) %>">
+        <%= article.title %>
+      </a>
+      <br>
+      <%# а можно так: используем хелпер link_to.
+      Хелпер link_to создает ссылкус первым аргументом в качестве текста ссылки
+      и вторым аргументом в качестве адреса ссылки %>
+      <%= link_to article.title, article %>
+    </li>
+    <br>
+  <% end %>
+</ul>
+
+<%# ссылка на создание новой статьи %>
+<%= link_to "New Article", new_article_path %>
